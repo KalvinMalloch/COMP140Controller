@@ -8,7 +8,6 @@ public class SlidingPotentiometer : MonoBehaviour
     public int slidingChosenNumber;
     public bool moduleCompleted;
     public bool minusModuleCompleted;
-    public static int completedModules;
     public Slider potenSlider;
     public Text slidingChosenText;
     public Text slidingPotenText;
@@ -21,18 +20,18 @@ public class SlidingPotentiometer : MonoBehaviour
         slidingChosenText.text = "Numeral: " + slidingChosenNumber.ToString();
     }
 
-    private void calculateSlider()
+    private void CalculateSlider()
     {
         slidingPotenText.text = potenSlider.value.ToString();
         if (potenSlider.value == slidingChosenNumber & moduleCompleted == false)
         {
-            completedModules = completedModules + 1;
+            GameManager.completedModules = GameManager.completedModules + 1;
             moduleCompleted = true;
             minusModuleCompleted = true;
         }
         else if (potenSlider.value != slidingChosenNumber & minusModuleCompleted == true)
         {
-            completedModules = completedModules - 1;
+            GameManager.completedModules = GameManager.completedModules - 1;
             minusModuleCompleted = false;
             moduleCompleted = false;
         }
@@ -40,7 +39,6 @@ public class SlidingPotentiometer : MonoBehaviour
 
     void Update()
     {
-        print(completedModules);
-        calculateSlider();
+        CalculateSlider();
     }
 }

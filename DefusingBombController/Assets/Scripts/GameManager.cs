@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
         countdownText = countdownText.GetComponent<Text>();
     }
 
-    private void countDown()
+    private void CountDown()
     {
         if (countingDown == true)
         {
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void endGame()
+    private void EndGame()
     {
         if (countdownNumber < 0)
         {
@@ -45,7 +45,8 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        countDown();
-        endGame();
+        CountDown();
+        EndGame();
+        print(completedModules);
     }
 }
