@@ -24,7 +24,7 @@ public class RotaryKnob : MonoBehaviour
         secondChosenRotaryNumber = Random.Range(1, 360);
     }
 
-    void CalculateRotary()
+    private void CalculateRotary()
     {
         chosenRotaryText.text = "Rotations: " + firstChosenRotaryNumber.ToString() + " & " + secondChosenRotaryNumber.ToString();
         currentRotaryOneText.text = firstRotaryNumber.ToString();
@@ -43,7 +43,7 @@ public class RotaryKnob : MonoBehaviour
         }
     }
 
-    void ChooseRotation()
+    private void ChooseRotation()
     {
         if (Input.GetKey(KeyCode.R))
         {
