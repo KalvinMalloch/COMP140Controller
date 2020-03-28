@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Uduino;
 
 public class LaserCompass : MonoBehaviour
 {
+    UduinoManager uduino;
+
     public string[] compassDirection = new string[] { "North", "East", "South", "West" };
     public bool moduleCompleted;
     public bool minusModuleCompleted;
@@ -16,6 +19,11 @@ public class LaserCompass : MonoBehaviour
 
     void Start()
     {
+        UduinoManager.Instance.pinMode(AnalogPin.A1, PinMode.Input);
+        UduinoManager.Instance.pinMode(AnalogPin.A2, PinMode.Input);
+        UduinoManager.Instance.pinMode(AnalogPin.A3, PinMode.Input);
+        UduinoManager.Instance.pinMode(AnalogPin.A4, PinMode.Input);
+
         directionIndex = Random.Range(0, compassDirection.Length);
         chosenDirection = compassDirection[directionIndex];
         directionText = directionText.GetComponent<Text>();
@@ -24,6 +32,11 @@ public class LaserCompass : MonoBehaviour
 
     private void CalculateDirection()
     {
+        UduinoManager.Instance.analogRead(AnalogPin.A1, "PinRead");
+        UduinoManager.Instance.analogRead(AnalogPin.A2, "PinRead");
+        UduinoManager.Instance.analogRead(AnalogPin.A3, "PinRead");
+        UduinoManager.Instance.analogRead(AnalogPin.A4, "PinRead");
+
         directionText.text = "Compass: " + chosenDirection;
         chosenDirectionText.text = "Direction: " + currentDirection;
         if (string.Compare(currentDirection, chosenDirection) == 0 & moduleCompleted == false)
@@ -38,6 +51,8 @@ public class LaserCompass : MonoBehaviour
             minusModuleCompleted = false;
             moduleCompleted = false;
         }
+
+        UduinoManager.Instance.SendBundle("PinRead");
     }
 
     private void ChooseDirection()

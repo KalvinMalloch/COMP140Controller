@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Uduino;
 
 public class SlidingPotentiometer : MonoBehaviour
 {
+    UduinoManager uduino;
+
     public int slidingChosenNumber;
     public bool moduleCompleted;
     public bool minusModuleCompleted;
@@ -14,6 +17,8 @@ public class SlidingPotentiometer : MonoBehaviour
 
     void Start()
     {
+        UduinoManager.Instance.pinMode(AnalogPin.A0, PinMode.Input);
+
         slidingChosenNumber = Random.Range(1, 100);
         slidingChosenText = slidingChosenText.GetComponent<Text>();
         slidingPotenText = slidingPotenText.GetComponent<Text>();
@@ -22,6 +27,8 @@ public class SlidingPotentiometer : MonoBehaviour
 
     private void CalculateSlider()
     {
+        potenSlider.value = (UduinoManager.Instance.analogRead(AnalogPin.A0, "PinRead")) / 10;
+
         slidingPotenText.text = potenSlider.value.ToString();
         if (potenSlider.value == slidingChosenNumber & moduleCompleted == false)
         {
@@ -35,6 +42,8 @@ public class SlidingPotentiometer : MonoBehaviour
             minusModuleCompleted = false;
             moduleCompleted = false;
         }
+
+        UduinoManager.Instance.SendBundle("PinRead");
     }
 
     void Update()
