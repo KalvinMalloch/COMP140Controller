@@ -1,4 +1,12 @@
-﻿using System.Collections;
+﻿// Kalvin Malloch 2020.
+// https://github.com/KalvinMalloch
+// MIT License Copyright (c) 2020
+
+// <summary>
+// Handles the countdown timer and the amount of completed modules.
+// </summary>
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,11 +18,18 @@ public class GameManager : MonoBehaviour
     public float countdownNumber;
     public Text countdownText;
 
+    /// <summary>
+    /// Grabs any necassary text components.
+    /// </summary>
     private void Start()
     {
         countdownText = countdownText.GetComponent<Text>();
     }
 
+    /// <summary>
+    /// Displays the timer text for the player.
+    /// Decreases the timer.
+    /// </summary>
     private void CountDown()
     {
         if (countingDown == true)
@@ -25,6 +40,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Displays amount of completed modules for the player.
+    /// Detects if the player has successfully completed all modules before the timer has run out.
+    /// </summary>
     private void EndGame()
     {
         if (countdownNumber < 0)

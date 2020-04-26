@@ -1,4 +1,12 @@
-﻿using System.Collections;
+﻿// Kalvin Malloch 2020.
+// https://github.com/KalvinMalloch
+// MIT License Copyright (c) 2020
+
+// <summary>
+// Handles the input and detection of the sliding potentiometer (top left).
+// </summary>
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,6 +23,10 @@ public class SlidingPotentiometer : MonoBehaviour
     public Text slidingChosenText;
     public Text slidingPotenText;
 
+    /// <summary>
+    /// Detects any specified pin inputs and then grabs any necassary text components.
+    /// Also randomises initial number the player has to match.
+    /// </summary>
     void Start()
     {
         UduinoManager.Instance.pinMode(AnalogPin.A0, PinMode.Input);
@@ -25,6 +37,10 @@ public class SlidingPotentiometer : MonoBehaviour
         slidingChosenText.text = "Numeral: " + slidingChosenNumber.ToString();
     }
 
+    /// <summary>
+    /// Translates pin input value and displays any text beneficial for the player.
+    /// Detects if the player has successfully matched the number.
+    /// </summary>
     private void CalculateSlider()
     {
         potenSlider.value = (UduinoManager.Instance.analogRead(AnalogPin.A0, "PinRead")) / 10;

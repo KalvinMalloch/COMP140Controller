@@ -1,4 +1,12 @@
-﻿using System.Collections;
+﻿// Kalvin Malloch 2020.
+// https://github.com/KalvinMalloch
+// MIT License Copyright (c) 2020
+
+// <summary>
+// Handles the rotation and detection of the rotary encoder (bottom right).
+// </summary>
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Uduino;
@@ -10,23 +18,29 @@ public class RotaryCircle : MonoBehaviour
     public GameObject circleStageOne;
     public GameObject circleStageTwo;
     public Transform circleRotation;
+    public int buttonPressed;
+    public bool startDelay;
     public bool stageOne;
     public bool stageTwo;
     public bool endTurning;
 
+    public int test;
+
+    /// <summary>
+    /// Detects any specified pin inputs.
+    /// </summary>
     void Start()
     {
-        UduinoManager.Instance.pinMode(2, PinMode.Input);
-        UduinoManager.Instance.pinMode(3, PinMode.Input);
-        UduinoManager.Instance.pinMode(4, PinMode.Input_pullup);
+
+        buttonPressed = 1;
+        UduinoManager.Instance.pinMode(2, PinMode.Input_pullup);
     }
 
+    /// <summary>
+    /// Detects if the player has moved to the next state of rotation.
+    /// </summary>
     private void CalculateRotaryCircle()
     {
-        UduinoManager.Instance.digitalRead(2);
-        UduinoManager.Instance.digitalRead(3);
-        UduinoManager.Instance.digitalRead(4);
-
         if (stageOne == false)
         {
             circleRotation = circleStageOne.transform;
@@ -38,6 +52,9 @@ public class RotaryCircle : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Provides keyboard input for when the Arduino isn't available.
+    /// </summary>
     private void ChooseRotaryRotation()
     {
         if (Input.GetKey(KeyCode.RightArrow) & endTurning == false)
@@ -48,11 +65,11 @@ public class RotaryCircle : MonoBehaviour
         {
             circleRotation.Rotate(0, 0, 5);
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || buttonPressed == 0)
         {
             stageOne = true;
         }
-        if (Input.GetKeyDown(KeyCode.Space) & stageTwo == true)
+        if ((Input.GetKeyDown(KeyCode.Space) || buttonPressed == 0) & (stageTwo == true))
         {
             endTurning = true;
         }
